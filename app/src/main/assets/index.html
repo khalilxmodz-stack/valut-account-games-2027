@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vault Accounts – Free Fire, PUBG Mobile &amp; War Thunder Accounts</title>
+<meta name="description" content="Gaming accounts available for purchase or exchange. Contact the owner by email.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#top"><span class="brand-mark"></span>Vault Accounts</a>
+  <nav aria-label="Main">
+    <a href="#accounts">Accounts</a>
+    <a href="#support">Supporting companies</a>
+    <a href="#how">How it works</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-in">
+      <h1>Gaming accounts, ready to play.</h1>
+      <p>Every account here belongs to the site owner. Pick one, then buy it or propose an exchange by email.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#accounts">Browse accounts</a>
+        <a class="btn btn-ghost" href="#support">Supporting companies</a>
+      </div>
+      <div id="stats" class="stats"></div>
+    </div>
+    <div class="strip" aria-hidden="true"><div id="strip" class="strip-track"></div></div>
+  </section>
+
+  <!-- AD SLOT: top (filled from ADS in script.js; stays hidden until configured) -->
+  <aside class="ad" data-ad="top" hidden><small>Advertisement</small><div class="ad-box"></div></aside>
+
+  <section id="accounts" class="wrap">
+    <div class="section-head">
+      <h2>Available accounts</h2>
+      <span id="count" class="count"></span>
+    </div>
+    <div class="tools">
+      <div id="filters" class="filters" role="tablist" aria-label="Filter by game"></div>
+      <input id="search" class="search" type="search" placeholder="Search accounts" aria-label="Search accounts">
+    </div>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <!-- AD SLOT: middle -->
+  <aside class="ad" data-ad="middle" hidden><small>Advertisement</small><div class="ad-box"></div></aside>
+
+  <section id="support" class="wrap">
+    <div class="section-head"><h2>Supporting companies</h2></div>
+    <p class="lead">The companies that back this project, the documents that give permission for it, and a way to help fund its development.</p>
+    <div class="support-grid">
+      <article class="panel">
+        <h3>Companies that support us</h3>
+        <div id="supporters" class="logos"></div>
+      </article>
+      <article class="panel">
+        <h3>Permission documents</h3>
+        <ul id="docs" class="docs"></ul>
+      </article>
+      <article class="panel panel-money">
+        <h3>Money help</h3>
+        <p class="muted">Your contribution pays for hosting, new accounts and new features. This site has no online payments, so you arrange it directly with the owner by email.</p>
+        <button id="money" class="btn btn-primary">Help with development</button>
+      </article>
+    </div>
+  </section>
+
+  <section id="how" class="wrap">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><b>Choose</b> an account and press Purchase or Exchange.</li>
+      <li><b>Copy</b> the owner's email and write the account name in your message.</li>
+      <li><b>Agree</b> on price or exchange terms directly with the owner.</li>
+    </ol>
+  </section>
+  <!-- AD SLOT: bottom -->
+  <aside class="ad" data-ad="bottom" hidden><small>Advertisement</small><div class="ad-box"></div></aside>
+</main>
+
+<footer class="foot">© <span id="year"></span> Vault Accounts. Every account shown is owned by the site administrator.</footer>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="m-title">
+    <button class="modal-x" data-close aria-label="Close">&times;</button>
+    <span id="m-action" class="pill"></span>
+    <h3 id="m-title"></h3>
+    <p id="m-meta" class="muted"></p>
+    <p id="m-text" class="muted"></p>
+    <div class="email-box"><span id="m-email"></span></div>
+    <div class="modal-actions">
+      <button id="m-copy" class="btn btn-primary">Copy email</button>
+      <a id="m-mail" class="btn btn-ghost" href="#">Open email app</a>
+    </div>
+  </div>
+</div>
+
+<div id="lightbox" class="lightbox" hidden data-close-lb>
+  <button class="modal-x" data-close-lb aria-label="Close image">&times;</button>
+  <img id="lb-img" alt="">
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>

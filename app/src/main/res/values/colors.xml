@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Same as the bg colour variable in the website style.css -->
+    <color name="app_bg">#07070B</color>
+    <color name="brand_blue">#4C7DFF</color>
+    <color name="brand_purple">#8B5CF6</color>
+</resources>

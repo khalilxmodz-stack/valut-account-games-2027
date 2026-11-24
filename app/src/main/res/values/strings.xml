@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Vault Accounts</string>
+    <string name="no_app_found">No app found to open this link</string>
+    <string name="cannot_open_file">Could not open this file</string>
+</resources>
