@@ -1,0 +1,86 @@
+name: Unzip Project
+
+on:
+  workflow_dispatch:
+    inputs:
+      zip_path:
+        description: 'Path of the ZIP file in the repo (leave empty to auto-detect)'
+        required: false
+        default: ''
+  push:
+    paths:
+      - '**.zip'
+
+permissions:
+  contents: write
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Optional: add a secret PAT_TOKEN (classic token with "repo" + "workflow" scopes)
+          # to also extract .github/workflows/build.yml from the ZIP.
+          token: ${{ secrets.PAT_TOKEN || github.token }}
+
+      - name: Find ZIP file
+        id: find
+        env:
+          INPUT_ZIP: ${{ github.event.inputs.zip_path }}
+        run: |
+          ZIP="$INPUT_ZIP"
+          if [ -z "$ZIP" ]; then
+            ZIP=$(find . -maxdepth 3 -name '*.zip' -not -path './.git/*' | head -n 1)
+          fi
+          if [ -z "$ZIP" ] || [ ! -f "$ZIP" ]; then
+            echo "No ZIP file found. Nothing to do."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Using ZIP: $ZIP"
+          echo "found=true" >> "$GITHUB_OUTPUT"
+          echo "zip=$ZIP" >> "$GITHUB_OUTPUT"
+
+      - name: Extract project to repository root
+        if: steps.find.outputs.found == 'true'
+        env:
+          ZIP: ${{ steps.find.outputs.zip }}
+          HAS_PAT: ${{ secrets.PAT_TOKEN != '' }}
+        run: |
+          rm -rf /tmp/extract && mkdir -p /tmp/extract
+          unzip -q "$ZIP" -d /tmp/extract
+
+          # If the ZIP has one top-level folder (e.g. MyApp-Android/), use its contents
+          shopt -s dotglob nullglob
+          items=(/tmp/extract/*)
+          if [ ${#items[@]} -eq 1 ] && [ -d "${items[0]}" ]; then
+            SRC="${items[0]}"
+          else
+            SRC=/tmp/extract
+          fi
+
+          if [ "$HAS_PAT" = "true" ]; then
+            rsync -a "$SRC"/ ./
+          else
+            # GITHUB_TOKEN is not allowed to write workflow files, so skip .github
+            rsync -a --exclude='.github' "$SRC"/ ./
+            echo "::notice::.github skipped (no PAT_TOKEN secret). Add .github/workflows/build.yml manually."
+          fi
+
+          git rm -f --quiet "$ZIP"
+          rm -f "$ZIP"
+
+      - name: Commit and push
+        if: steps.find.outputs.found == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Extract project from ZIP"
+          git push
